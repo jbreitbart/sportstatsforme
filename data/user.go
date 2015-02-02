@@ -107,7 +107,7 @@ func generateSecureKey() string {
 		rand.Seed(time.Now().UTC().UnixNano())
 	})
 
-	b := make([]rune, keySize)
+	var b [keySize]rune
 	for i := range b {
 		b[i] = letters[rand.Intn(len(letters))]
 	}
