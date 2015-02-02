@@ -20,7 +20,7 @@ type User struct {
 }
 
 // StoreUser stores the user in the database
-func StoreUser(c appengine.Context, u *User) (*datastore.Key, error) {
+func (u *User) Store(c appengine.Context) (*datastore.Key, error) {
 
 	u.SecureKey = generateSecureKey()
 

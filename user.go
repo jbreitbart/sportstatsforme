@@ -49,7 +49,7 @@ func userKey(w http.ResponseWriter, r *http.Request, emailAddress string) (*data
 	// Store it
 	u.Name = m[0]
 	u.EMailAddress = emailAddress
-	k, err = data.StoreUser(c, &u)
+	k, err = u.Store(c)
 	if err != nil {
 		c.Errorf("Error at storing user: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
