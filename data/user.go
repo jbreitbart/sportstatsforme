@@ -19,7 +19,7 @@ type User struct {
 	EMailAddress string `datastore:",index"`
 }
 
-// StoreUser stores the user in the database
+// Store stores the user in the database
 func (u *User) Store(c appengine.Context) (*datastore.Key, error) {
 
 	u.SecureKey = generateSecureKey()
@@ -96,13 +96,17 @@ func GetUserByKey(c appengine.Context, key *datastore.Key) *User {
 // Used to initialize the seed for random just once
 var randomSeedInit sync.Once
 
+// Alphabet for the secure key
+var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+// Length of the secure key
+const keySize = 32
+
 func generateSecureKey() string {
 	randomSeedInit.Do(func() {
 		rand.Seed(time.Now().UTC().UnixNano())
 	})
 
-	keySize := 32
-	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	b := make([]rune, keySize)
 	for i := range b {
 		b[i] = letters[rand.Intn(len(letters))]
