@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/jbreitbart/sportstatsforme/data"
 	"github.com/jbreitbart/sportstatsforme/targets"
 	"github.com/jbreitbart/sportstatsforme/targets/user"
 
@@ -42,7 +43,13 @@ func handlerWWW(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO check if user ID is valid
+	var u data.User
+	u.DatastoreKey = userKey
+	if err := u.GetByKey(c); err != nil {
+		c.Errorf("Invalid key: %s, %s", userKeyString, err)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
 
 	// get target
 	target := strings.ToLower(targets.GetToken(&url))
@@ -54,7 +61,7 @@ func handlerWWW(w http.ResponseWriter, r *http.Request) {
 
 	switch target {
 	case "user":
-		user.Dispatch(w, r, userKey, &url)
+		user.Dispatch(w, r, &u, &url)
 	}
 
 }

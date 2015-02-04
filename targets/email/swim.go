@@ -7,16 +7,17 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/jbreitbart/sportstatsforme/data"
+
 	"appengine"
-	"appengine/datastore"
 )
 
-func Breaststroke(w http.ResponseWriter, r *http.Request, emailText string, k *datastore.Key) {
+func Breaststroke(w http.ResponseWriter, r *http.Request, emailText string, u *data.User) {
 	c := appengine.NewContext(r)
-	/*	if err != nil {
-		c.Errorf("No @ in email to address??? %v", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	/*      if err != nil {
+	        c.Errorf("No @ in email to address??? %v", err)
+	        w.WriteHeader(http.StatusInternalServerError)
+	        return
 	}*/
 
 	reader := strings.NewReader(emailText)

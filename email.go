@@ -37,14 +37,14 @@ func handlerEmails(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// search for from address in DB
-	k, err := userKey(w, r, from[0].Address)
+	u, err := getUser(w, r, from[0].Address)
 
 	if err != nil {
 		return
 	}
 
-	// k == user key
-	c.Infof("%v", k)
+	// u == user
+	c.Infof("%v", u)
 
 	to, err := msg.Header.AddressList("To")
 	if err != nil {
@@ -64,9 +64,9 @@ func handlerEmails(w http.ResponseWriter, r *http.Request) {
 	//TODO email in kleinbuchstaben umwandeln
 	switch emailAddress[:at] {
 	case "breaststroke":
-		email.Breaststroke(w, r, mime.Text, k)
+		email.Breaststroke(w, r, mime.Text, u)
 	case "brustschwimmen":
-		email.Breaststroke(w, r, mime.Text, k)
+		email.Breaststroke(w, r, mime.Text, u)
 	case "crawl":
 		email.Crawl()
 	}
