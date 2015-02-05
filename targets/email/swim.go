@@ -4,6 +4,7 @@ package email
 
 import (
 	"bufio"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -12,7 +13,22 @@ import (
 	"github.com/jbreitbart/sportstatsforme/data"
 
 	"appengine"
+	"appengine/mail"
 )
+
+const confirmationMessage = `
+We have added the following statistics to your account:
+
+----
+Swim style: %v
+#Lanes: %v
+Lane length: %v
+Time: %v
+----
+
+Click the following link to delete the stats
+%s
+`
 
 // Breaststroke parses an email and stores the data in the datastore
 // Format:
@@ -90,7 +106,21 @@ func Breaststroke(w http.ResponseWriter, r *http.Request, emailText string, u *d
 		return
 	}
 
-	// TODO send email with link to delete it
+	// Send confirmation email
+	url := "http://sportstatsforme.appspot.com/u/" + u.DatastoreKey.Encode() + "/swim/delete/" + ss.DatastoreKey.Encode()
+	msg := &mail.Message{
+		Sender:  "Sport Stats for Me <dontcare@sportstatsforme.appspotmail.com>",
+		To:      []string{u.EMailAddress},
+		Subject: "Added stats to your user",
+		Body:    fmt.Sprintf(confirmationMessage, "breaststroke", ss.Lanes, ss.LaneLength, ss.Time, url),
+	}
+
+	c.Infof("Body: %v", msg.Body)
+
+	if err := mail.Send(c, msg); err != nil {
+		c.Errorf("Couldn't send email: %v", err)
+	}
+
 }
 
 func Crawl() {
