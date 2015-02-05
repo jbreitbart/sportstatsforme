@@ -85,6 +85,7 @@ func GetUserByEmail(c appengine.Context, email string) *User {
 	}
 
 	returnee := u[0]
+	returnee.DatastoreKey = keys[0]
 	return &returnee
 }
 

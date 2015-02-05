@@ -13,18 +13,18 @@ import (
 type SwimStyle int
 
 const (
-	breaststroke SwimStyle = iota
-	crawl
+	Breaststroke SwimStyle = iota
+	Crawl
 )
 
 // SwimStats is all information stored for swimming
 type SwimStats struct {
 	Style        SwimStyle      `datastore:",index"`
 	Lanes        int            `datastore:",noindex"`
-	LaneSize     int            `datastore:",noindex"`
+	LaneLength   int            `datastore:",noindex"`
 	Time         time.Duration  `datastore:",noindex"`
 	CreatedAt    time.Time      `datastore:",index"`
-	User         datastore.Key  `datastore:",index"`
+	User         *datastore.Key `datastore:",index"`
 	DatastoreKey *datastore.Key `datastore:"-"`
 }
 

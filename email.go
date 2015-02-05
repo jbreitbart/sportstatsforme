@@ -61,8 +61,7 @@ func handlerEmails(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//TODO email in kleinbuchstaben umwandeln
-	switch emailAddress[:at] {
+	switch strings.ToLower(emailAddress[:at]) {
 	case "breaststroke":
 		email.Breaststroke(w, r, mime.Text, u)
 	case "brustschwimmen":
@@ -71,10 +70,4 @@ func handlerEmails(w http.ResponseWriter, r *http.Request) {
 		email.Crawl()
 	}
 
-	// parse email
-	// string@appid.appspotmail.com
-
-	// {breaststroke|crawl}@...
-	// <lanes>*<lanesize>
-	// time
 }
