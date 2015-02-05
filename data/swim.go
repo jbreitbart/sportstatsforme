@@ -3,6 +3,7 @@
 package data
 
 import (
+	"errors"
 	"time"
 
 	"appengine"
@@ -54,4 +55,32 @@ func (ss *SwimStats) Delete(c appengine.Context) error {
 	}
 
 	return err
+}
+
+func deleteAllSwimStatsofUser(c appengine.Context, userKey *datastore.Key) error {
+	c.Infof("Delete all swimStats of a user.")
+	q := datastore.NewQuery("SwimStats").
+		Filter("User =", userKey).
+		KeysOnly()
+
+	keys, err := q.GetAll(c, nil)
+
+	if err != nil {
+		c.Errorf("Error while getting all swimStats keys of a user: %v", err)
+		return err
+	}
+
+	if len(keys) == 0 {
+		c.Infof("None found.")
+		return errors.New("asd")
+	}
+
+	err = datastore.DeleteMulti(c, keys)
+	if err != nil {
+		c.Errorf("Error while deleting swimStats: %v", err)
+		return err
+	}
+
+	return nil
+
 }

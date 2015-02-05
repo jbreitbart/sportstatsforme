@@ -4,9 +4,6 @@ package data
 
 import (
 	"errors"
-	"math/rand"
-	"sync"
-	"time"
 
 	"appengine"
 	"appengine/datastore"
@@ -53,14 +50,16 @@ func (u *User) Delete(c appengine.Context) error {
 		return errors.New("Invalid key. " + secureKey + " - " + u.SecureKey)
 	}
 
-	err := datastore.Delete(c, k)
-	if err != nil {
-		c.Errorf("Error while deleting user from datastore. Error: %v", err)
+	if err := deleteAllSwimStatsofUser(c, k); err != nil {
+		return nil
 	}
 
-	// TODO delete every user data
+	if err := datastore.Delete(c, k); err != nil {
+		c.Errorf("Error while deleting user from datastore. Error: %v", err)
+		return err
+	}
 
-	return err
+	return nil
 }
 
 // GetUserByEmail returns the user key based on the email
@@ -101,49 +100,3 @@ func (u *User) GetByKey(c appengine.Context) error {
 
 	return nil
 }
-
-// Used to initialize the seed for random just once
-var randomSeedInit sync.Once
-
-// Alphabet for the secure key
-var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-// Length of the secure key
-const keySize = 32
-
-func generateSecureKey() string {
-	randomSeedInit.Do(func() {
-		rand.Seed(time.Now().UTC().UnixNano())
-	})
-
-	b := make([]rune, keySize)
-	for i := range b {
-		b[i] = letters[rand.Intn(len(letters))]
-	}
-	return string(b)
-}
-
-/*
-// GetUserKeyByEmail returns the user key based on the email
-func GetUserKeyByEmail(c appengine.Context, email string) *datastore.Key {
-	c.Infof("Searching for user: %v", email)
-
-	q := datastore.NewQuery("User").
-		Filter("EMailAddress =", email).
-		Limit(1).
-		KeysOnly()
-
-	keys, err := q.GetAll(c, nil)
-	if err != nil {
-		c.Errorf("Error at user key query: %v", err)
-		return nil
-	}
-
-	if len(keys) == 0 {
-		c.Infof("Not found.")
-		return nil
-	}
-
-	return keys[0]
-}
-*/

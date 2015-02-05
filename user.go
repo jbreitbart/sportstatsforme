@@ -14,6 +14,18 @@ import (
 	"github.com/jbreitbart/sportstatsforme/data"
 )
 
+const accountCreationMessage = `
+We have created an account with the following data just for you:
+
+----
+Name: %s
+E-Mail: %s
+----
+
+Click the following link to delete your account
+%s
+`
+
 func getUser(w http.ResponseWriter, r *http.Request, emailAddress string) (*data.User, error) {
 	c := appengine.NewContext(r)
 
@@ -81,15 +93,3 @@ func getRandomName(w http.ResponseWriter, r *http.Request) (string, error) {
 
 	return m[0], nil
 }
-
-const accountCreationMessage = `
-We have created an account with the following data just for you:
-
-----
-Name: %s
-E-Mail: %s
-----
-
-Click the following link to delete your account
-%s
-`
