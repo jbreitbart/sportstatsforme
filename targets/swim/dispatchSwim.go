@@ -1,6 +1,6 @@
 // +build appengine
 
-package user
+package swim
 
 import (
 	"fmt"
@@ -11,9 +11,10 @@ import (
 	"github.com/jbreitbart/sportstatsforme/targets"
 
 	"appengine"
+	"appengine/datastore"
 )
 
-// Dispatch executes all commands for the user target
+// Dispatch executes all commands for the swim target
 func Dispatch(w http.ResponseWriter, r *http.Request, u *data.User, urlPart *string) {
 	c := appengine.NewContext(r)
 
@@ -25,17 +26,26 @@ func Dispatch(w http.ResponseWriter, r *http.Request, u *data.User, urlPart *str
 	}
 
 	if command == "delete" {
-		c.Infof("account/delete")
+		c.Infof("swim/delete")
 
-		u.SecureKey = targets.GetToken(urlPart)
+		var ss data.SwimStats
+		var err error
 
-		if err := u.Delete(c); err != nil {
-			c.Errorf("Error at in account/delete. Error: %v", err)
+		ss.DatastoreKey, err = datastore.DecodeKey(targets.GetToken(urlPart))
+		if err != nil {
+			c.Errorf("Error while decoding datatstore key. Error: %v", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		fmt.Fprintf(w, "User deleted!")
+		err = ss.Delete(c)
+		if err != nil {
+			c.Errorf("Error at in swim/delete. Error: %v", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		fmt.Fprintf(w, "Swim stat deleted!")
 
 		return
 	}

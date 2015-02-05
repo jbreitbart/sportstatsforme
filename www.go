@@ -8,6 +8,7 @@ import (
 
 	"github.com/jbreitbart/sportstatsforme/data"
 	"github.com/jbreitbart/sportstatsforme/targets"
+	"github.com/jbreitbart/sportstatsforme/targets/swim"
 	"github.com/jbreitbart/sportstatsforme/targets/user"
 
 	"appengine"
@@ -62,9 +63,12 @@ func handlerWWW(w http.ResponseWriter, r *http.Request) {
 	switch target {
 	case "user":
 		user.Dispatch(w, r, &u, &url)
+	case "swim":
+		swim.Dispatch(w, r, &u, &url)
 	}
 
 }
 
 //<domain>/u/<userkey>/user/delete <- delete the account
+//<domain>/u/<userkey>/swim/delete/<key> <- delete a specific swim stat
 //<domain>/u/<userkey>/swim/json <- get json swim data
