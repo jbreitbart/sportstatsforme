@@ -3,74 +3,59 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>SportStats</title>
+	<title>SPSS</title>
 
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.js"></script>
 	<![endif]-->
 
-	<style>
-		a.name {
-			position: relative;
-			top: -50px;
-			margin: 0;
-			padding: 0;
-			float: left;
-		}
-	</style>
-	<link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
-	<link rel="stylesheet" href="css/bootstrap-responsive.min.css" media="screen">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" media="screen">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/yeti/bootstrap.min.css">
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/spin.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-	<script type="text/javascript">
-		var spinnerOpts = {
-			lines: 13, // The number of lines to draw
-			length: 4, // The length of each line
-			width: 2, // The line thickness
-			radius: 4, // The radius of the inner circle
-			corners: 1, // Corner roundness (0..1)
-			rotate: 0, // The rotation offset
-			color: '#000', // #rgb or #rrggbb
-			speed: 1, // Rounds per second
-			trail: 60, // Afterglow percentage
-			shadow: false, // Whether to render a shadow
-			hwaccel: true, // Whether to use hardware acceleration
-			className: 'spinner', // The CSS class to assign to the spinner
-			zIndex: 2e9, // The z-index (defaults to 2000000000)
-			top: 'auto', // Top position relative to parent in px
-			left: 'auto' // Left position relative to parent in px
-		};
-	</script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 </head>
 
-<body style="padding-top: 45px">
+<body>
 
-<div class="navbar navbar-fixed-top" bs-navbar>
-	<div class="navbar-inner">
-		<div class="container">
-			<a class="brand" href="#">Sport Stats</a>
-			<ul class="nav">
-			</ul>
-			<ul class="nav pull-right">
-				<li><a href="https://github.com/jbreitbart/sportstatsforme">Developers</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">SPSS</a>
+	    </div>
 
-
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Top <span class="sr-only">(current)</span></a></li>
+	        <li><a href="#">How to use it</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="https://github.com/jbreitbart/sportstatsforme">Run your own</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
 
 
 <div class="container">
-	<div class="hero-unit">
-		<h1>Just some private sport statistics</h1>
-	</div>
-</div>
 
+	<div class="jumbotron">
+		<h1>Some Private Sport Statistics</h1>
+		<p>SPSS</p>
+		<p><a href="http://blog.fefe.de/" class="btn btn-primary btn-lg">Learn more</a> <a href="http://www.bild.de/" class="btn btn-primary btn-lg">Learn less</a> <a href="http://www.listen-project.de/garfield" class="btn btn-primary btn-lg">Learn?</a></p>
+	</div>
+
+</div>
 
 </body>
 </html>

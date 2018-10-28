@@ -111,7 +111,7 @@ func Breaststroke(w http.ResponseWriter, r *http.Request, emailText string, u *d
 	msg := &mail.Message{
 		Sender:  "Sport Stats for Me <dontcare@sportstatsforme.appspotmail.com>",
 		To:      []string{u.EMailAddress},
-		Subject: "Added stats to your user",
+		Subject: "Added stats to your account",
 		Body:    fmt.Sprintf(confirmationMessage, "breaststroke", ss.Lanes, ss.LaneLength, ss.Time, url),
 	}
 

@@ -173,6 +173,8 @@ handlers:
   upload: static/(.*\.(bz2|gz|rar|tar|tgz|zip))
 
 # users
+- url: /u/(.*)/swim/stats/
+  script: static/swimstats.html
 - url: /u/(.*)
   script: _go_app
 - url: /u/(.*)/

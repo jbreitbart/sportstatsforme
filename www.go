@@ -72,3 +72,4 @@ func handlerWWW(w http.ResponseWriter, r *http.Request) {
 //<domain>/u/<userkey>/user/delete <- delete the account
 //<domain>/u/<userkey>/swim/delete/<key> <- delete a specific swim stat
 //<domain>/u/<userkey>/swim/json <- get json swim data
+//<domain>/u/<userkey>/swim/stats <- html view

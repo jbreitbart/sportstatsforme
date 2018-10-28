@@ -29,6 +29,29 @@ type SwimStats struct {
 	DatastoreKey *datastore.Key `datastore:"-"`
 }
 
+// Returns all swimstats for a specific user
+func GetAllSwimStatsforUser(c appengine.Context, u *User) ([]SwimStats, error) {
+	c.Infof("Get all swim stats for User: %v", u)
+
+	q := datastore.NewQuery("SwimStats").
+		Filter("User =", u.DatastoreKey)
+
+	var stats []SwimStats
+	keys, err := q.GetAll(c, &stats)
+
+	if err != nil {
+		c.Errorf("Error at get all SwimStats for user: %v", err)
+		return nil, err
+	}
+
+	if len(keys) == 0 {
+		c.Infof("Found nothing.")
+		return nil, nil
+	}
+
+	return stats, nil
+}
+
 // Store stores the SwimStats in the database
 func (ss *SwimStats) Store(c appengine.Context) error {
 
